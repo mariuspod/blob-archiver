@@ -1,5 +1,9 @@
 version: "3.7"
 
+volumes:
+  blobs_data: {}
+
+
 services:
   api:
     build:
@@ -9,6 +13,8 @@ services:
       - .env
     command:
       - "blob-api"
+    volumes:
+      - blobs_data:/data
     depends_on:
       - minio
       - create-buckets
@@ -18,6 +24,8 @@ services:
       dockerfile: Dockerfile
     command:
       - "blob-archiver"
+    volumes:
+      - blobs_data:/data
     env_file:
       - .env
     depends_on:
